@@ -9,20 +9,32 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @State private var name = ""
+    @State private var isNameCorrect = false
     @EnvironmentObject var user: UserManager
     
     var body: some View {
         VStack {
-            TextField("Enter your name...", text: $name)
-                .multilineTextAlignment(.center)
+            HStack {
+                TextField("Enter your name...", text: $user.enteredName)
+                    .font(.title)
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                Text("\(user.enteredName.count)")
+                    .font(.title)
+                    .foregroundColor(user.isNameCorrect ? .green : .red)
+            }.padding(.horizontal)
             
             Button(action: registerUser) {
                 HStack {
                     Image(systemName: "checkmark.circle")
-                    Text("Ok")
+                        .font(.title)
+                    Text("OK")
+                        .font(.title)
                 }
             }
+            .disabled(!user.isNameCorrect)
+
         }
         .padding()
     }
@@ -30,10 +42,8 @@ struct RegisterView: View {
 
 extension RegisterView {
     private func registerUser() {
-        if !name.isEmpty {
-            user.name = name
-            user.isRegister = true
-        }
+        user.name = user.enteredName
+        user.isRegister = true
     }
 }
 

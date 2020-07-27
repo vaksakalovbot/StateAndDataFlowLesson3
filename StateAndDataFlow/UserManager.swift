@@ -11,10 +11,21 @@ import Combine
 
 final class UserManager: ObservableObject {
     @Published var isRegister = false
-    
+    @Published var isNameCorrect = false
+    @Published var enteredName = "" {
+        didSet {
+            if enteredName.count >= 3 {
+                isNameCorrect = true
+            } else {
+                isNameCorrect = false
+            }
+        }
+    }
+
     var name = "" {
         didSet {
             UserDefaults.standard.set(name, forKey: "username")
+            enteredName = name
         }
     }
     
