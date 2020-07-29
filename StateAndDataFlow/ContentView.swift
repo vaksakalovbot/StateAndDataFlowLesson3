@@ -60,6 +60,8 @@ struct ButtonView: View {
     }
 }
 
+
+// Добавляем кнопку со смещением y: -20 
 struct ButtonLogoutView: View {
     @EnvironmentObject var user: UserManager
 
@@ -81,6 +83,7 @@ struct ButtonLogoutView: View {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .stroke(Color.black, lineWidth: 4)
             )
+            .offset(x: 0, y: -20)
         }
     }
 }
